@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E5213641F31AD43003C18D1 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5213621F31AD43003C18D1 /* FXBlurView.m */; };
 		2E986E1A1F30255B00E7D7A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E986E191F30255B00E7D7A4 /* main.m */; };
 		2E986E1D1F30255B00E7D7A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E986E1C1F30255B00E7D7A4 /* AppDelegate.m */; };
 		2E986E201F30255B00E7D7A4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E986E1F1F30255B00E7D7A4 /* ViewController.m */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E5213621F31AD43003C18D1 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		2E5213631F31AD43003C18D1 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		2E986E151F30255B00E7D7A4 /* MockTwitterUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MockTwitterUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E986E191F30255B00E7D7A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2E986E1B1F30255B00E7D7A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -58,6 +61,8 @@
 		2E986E171F30255B00E7D7A4 /* MockTwitterUI */ = {
 			isa = PBXGroup;
 			children = (
+				2E5213621F31AD43003C18D1 /* FXBlurView.m */,
+				2E5213631F31AD43003C18D1 /* FXBlurView.h */,
 				2E986E1B1F30255B00E7D7A4 /* AppDelegate.h */,
 				2E986E1C1F30255B00E7D7A4 /* AppDelegate.m */,
 				2E986E1E1F30255B00E7D7A4 /* ViewController.h */,
@@ -152,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E986E201F30255B00E7D7A4 /* ViewController.m in Sources */,
+				2E5213641F31AD43003C18D1 /* FXBlurView.m in Sources */,
 				2E986E1D1F30255B00E7D7A4 /* AppDelegate.m in Sources */,
 				2E986E1A1F30255B00E7D7A4 /* main.m in Sources */,
 			);
@@ -275,6 +281,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 25EZUPR5QA;
 				INFOPLIST_FILE = MockTwitterUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.none.MockTwitterUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -287,6 +294,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 25EZUPR5QA;
 				INFOPLIST_FILE = MockTwitterUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.none.MockTwitterUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -312,6 +320,7 @@
 				2E986E2E1F30255B00E7D7A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
