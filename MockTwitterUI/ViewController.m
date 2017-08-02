@@ -29,6 +29,70 @@ const CGFloat distance_W_LabelHeader = 35.0; // The distance between the bottom 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.header.clipsToBounds = YES;
+    
+    self.headerBlurImageView.alpha = 0.0;
+    self.headerBlurImageView.tintColor = UIColor.clearColor;
+    self.headerBlurImageView.blurRadius = 20;
+    
+    self.avatar.clipsToBounds = YES;
+    self.avatar.layer.borderColor = UIColor.whiteColor.CGColor;
+    self.follow.layer.borderColor = [UIColor colorWithRed:85.0/255.0 green:172.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
+    
+    self.avatar.translatesAutoresizingMaskIntoConstraints = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    CGPoint defaultAnchorPoint = CGPointMake(0.5, 0.5);
+    
+    CGPoint oldHeaderPosition = self.header.layer.position;
+    CGPoint newHeaderAnchorPoint = CGPointMake(0.5, 0);
+    self.header.layer.anchorPoint = newHeaderAnchorPoint;
+    self.header.layer.position = CGPointMake(oldHeaderPosition.x + self.header.bounds.size.width * (newHeaderAnchorPoint.x - defaultAnchorPoint.x),
+                                             oldHeaderPosition.y + self.header.bounds.size.height * (newHeaderAnchorPoint.y - defaultAnchorPoint.y));
+    
+    CGPoint oldAvatarPosition = self.avatar.layer.position;
+    CGPoint newAvatarAnchorPoint = CGPointMake(0.5, 1);
+    self.avatar.layer.anchorPoint = newAvatarAnchorPoint;
+    self.avatar.layer.position = CGPointMake(oldAvatarPosition.x + self.header.bounds.size.width * (newAvatarAnchorPoint.x - defaultAnchorPoint.x),
+                                             oldAvatarPosition.y + self.avatar.bounds.size.height * (newAvatarAnchorPoint.y - defaultAnchorPoint.y));
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat offset = scrollView.contentOffset.y;
+    
+    if (offset < 0) {
+        CGFloat headerScaleFactor = -(offset) / self.header.bounds.size.height;
+        CATransform3D headerTransform = CATransform3DMakeScale(1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0);
+        self.header.layer.transform = headerTransform;
+    } else {
+        CATransform3D headerTransform = CATransform3DMakeTranslation(0, fmax(-offset_HeaderStop, -offset), 0);
+        self.header.layer.transform = headerTransform;
+        
+        CATransform3D labelTransform = CATransform3DMakeTranslation(0, fmax(-distance_W_LabelHeader, offset_B_LabelHeader - offset), 0);
+        self.headerLabel.layer.transform = labelTransform;
+        
+        self.headerBlurImageView.alpha = fmin(1.0, (offset - offset_B_LabelHeader)/distance_W_LabelHeader);
+        
+        CGFloat avatarScaleFactor = (fmin(offset_HeaderStop, offset)) / self.avatar.bounds.size.height / 1.4;
+        CATransform3D avatarTransform = CATransform3DMakeScale(1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0);
+        self.avatar.layer.transform = avatarTransform;
+        if (offset <= offset_HeaderStop) {
+            if (self.avatar.layer.zPosition < self.header.layer.zPosition){
+                self.header.layer.zPosition = 0;
+            }
+        }else {
+            if (self.avatar.layer.zPosition >= self.header.layer.zPosition){
+                self.header.layer.zPosition = 2;
+            }
+        }
+    }
 }
 
 @end
