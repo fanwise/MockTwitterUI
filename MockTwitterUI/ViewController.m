@@ -67,32 +67,36 @@ const CGFloat distance_W_LabelHeader = 35.0; // The distance between the bottom 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offset = scrollView.contentOffset.y;
     
+    CATransform3D headerTransform = CATransform3DIdentity;
+    CATransform3D labelTransform = CATransform3DIdentity;
+    CATransform3D avatarTransform = CATransform3DIdentity;
+    
     if (offset < 0) {
         CGFloat headerScaleFactor = -(offset) / self.header.bounds.size.height;
-        CATransform3D headerTransform = CATransform3DMakeScale(1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0);
-        self.header.layer.transform = headerTransform;
+        headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0);
     } else {
-        CATransform3D headerTransform = CATransform3DMakeTranslation(0, fmax(-offset_HeaderStop, -offset), 0);
-        self.header.layer.transform = headerTransform;
-        
-        CATransform3D labelTransform = CATransform3DMakeTranslation(0, fmax(-distance_W_LabelHeader, offset_B_LabelHeader - offset), 0);
-        self.headerLabel.layer.transform = labelTransform;
-        
-        self.headerBlurImageView.alpha = fmin(1.0, (offset - offset_B_LabelHeader)/distance_W_LabelHeader);
+        headerTransform = CATransform3DTranslate(headerTransform, 0, fmax(-offset_HeaderStop, -offset), 0);
+        labelTransform = CATransform3DTranslate(labelTransform, 0, fmax(-distance_W_LabelHeader, offset_B_LabelHeader - offset), 0);
         
         CGFloat avatarScaleFactor = (fmin(offset_HeaderStop, offset)) / self.avatar.bounds.size.height / 1.4;
-        CATransform3D avatarTransform = CATransform3DMakeScale(1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0);
-        self.avatar.layer.transform = avatarTransform;
-        if (offset <= offset_HeaderStop) {
-            if (self.avatar.layer.zPosition < self.header.layer.zPosition){
-                self.header.layer.zPosition = 0;
-            }
-        }else {
-            if (self.avatar.layer.zPosition >= self.header.layer.zPosition){
-                self.header.layer.zPosition = 2;
-            }
+        avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0);
+    }
+    
+    if (offset <= offset_HeaderStop) {
+        if (self.avatar.layer.zPosition < self.header.layer.zPosition){
+            self.header.layer.zPosition = 0;
+        }
+    }else {
+        if (self.avatar.layer.zPosition >= self.header.layer.zPosition){
+            self.header.layer.zPosition = 2;
         }
     }
+    
+    self.headerBlurImageView.alpha = fmin(1.0, (offset - offset_B_LabelHeader)/distance_W_LabelHeader);
+    
+    self.header.layer.transform = headerTransform;
+    self.headerLabel.layer.transform = labelTransform;
+    self.avatar.layer.transform = avatarTransform;
 }
 
 @end
