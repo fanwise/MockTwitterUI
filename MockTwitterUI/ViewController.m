@@ -38,26 +38,28 @@ const CGFloat distance_W_LabelHeader = 35.0; // The distance between the bottom 
     self.avatar.clipsToBounds = YES;
     self.avatar.layer.borderColor = UIColor.whiteColor.CGColor;
     self.follow.layer.borderColor = [UIColor colorWithRed:85.0/255.0 green:172.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
-    
-    self.avatar.translatesAutoresizingMaskIntoConstraints = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    CGPoint defaultAnchorPoint = CGPointMake(0.5, 0.5);
+    self.header.translatesAutoresizingMaskIntoConstraints = YES;
+    [self setAnchorPointWithoutFrameMove:CGPointMake(0.5, 0) forView:self.header];
     
-    CGPoint oldHeaderPosition = self.header.layer.position;
-    CGPoint newHeaderAnchorPoint = CGPointMake(0.5, 0);
-    self.header.layer.anchorPoint = newHeaderAnchorPoint;
-    self.header.layer.position = CGPointMake(oldHeaderPosition.x + self.header.bounds.size.width * (newHeaderAnchorPoint.x - defaultAnchorPoint.x),
-                                             oldHeaderPosition.y + self.header.bounds.size.height * (newHeaderAnchorPoint.y - defaultAnchorPoint.y));
+    self.avatar.translatesAutoresizingMaskIntoConstraints = YES;
+    [self setAnchorPointWithoutFrameMove:CGPointMake(0.5, 1) forView:self.avatar];
+}
+
+- (void)setAnchorPointWithoutFrameMove:(CGPoint)anchorPoint forView:(UIView *)view {
+    CGPoint oldAnchorPoint = view.layer.anchorPoint;
+    CGPoint oldPosition = view.layer.position;
+    CGPoint newPostion = CGPointZero;
     
-    CGPoint oldAvatarPosition = self.avatar.layer.position;
-    CGPoint newAvatarAnchorPoint = CGPointMake(0.5, 1);
-    self.avatar.layer.anchorPoint = newAvatarAnchorPoint;
-    self.avatar.layer.position = CGPointMake(oldAvatarPosition.x + self.header.bounds.size.width * (newAvatarAnchorPoint.x - defaultAnchorPoint.x),
-                                             oldAvatarPosition.y + self.avatar.bounds.size.height * (newAvatarAnchorPoint.y - defaultAnchorPoint.y));
+    newPostion.x = oldPosition.x + view.bounds.size.width * (anchorPoint.x - oldAnchorPoint.x);
+    newPostion.y = oldPosition.y + view.bounds.size.height * (anchorPoint.y - oldAnchorPoint.y);
+    
+    view.layer.position = newPostion;
+    view.layer.anchorPoint = anchorPoint;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
